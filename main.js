@@ -22,3 +22,8 @@ ipcMain.on("open-minuteur", (event, value) => {
         win.webContents.send("start-timer", value);
     });
 });
+
+ipcMain.on("open-menu", (event, value) => {
+    win.loadFile("index-html").then(() => {});
+});
+
