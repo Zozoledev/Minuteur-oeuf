@@ -1,28 +1,24 @@
 let timerElement = document.getElementById("timer");
 let temp = 0;
+let intervalId;
 
-function diminuerTemps(){
-
-    timerElement.innerText = temp
+function diminuerTemps() {
+    timerElement.innerText = temp;
     temp -= 1;
 
+    if (temp < 0) {
+        clearInterval(intervalId);
+        timerElement.innerText = "Terminé !";
+    }
 }
 
-setInterval(diminuerTemps, 1000);
+function startTimer() {
+    clearInterval(intervalId);
+    intervalId = setInterval(diminuerTemps, 1000);
+}
 
-document.getElementById("coq").addEventListener("click", () => {
-    window.api.openMinuteur();
-    temp = 90;
-
-});
-
-document.getElementById("dure").addEventListener("click", () => {
-    window.api.openMinuteur();
-    temp = 540;
-});
-
-document.getElementById("mollets").addEventListener("click", () => {
-    window.api.openMinuteur();
-    temp = 360;
-
+// Écoute le message avec la valeur du timer
+window.api.onTimerValue((value) => {
+    temp = value;
+    startTimer();
 });
