@@ -3,7 +3,9 @@ let temp = 0;
 let intervalId;
 
 function diminuerTemps() {
-    timerElement.innerText = temp;
+    let minute = Math.floor(temp / 60);
+    let seconde  = temp % 60;
+    timerElement.innerText = minute + " : " + seconde;
     temp -= 1;
 
     if (temp < 0) {
@@ -21,4 +23,8 @@ function startTimer() {
 window.api.onTimerValue((value) => {
     temp = value;
     startTimer();
+});
+
+document.getElementById("back").addEventListener("click", () => {
+    window.api.openMenu()
 });
